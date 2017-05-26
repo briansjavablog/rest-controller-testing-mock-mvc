@@ -26,6 +26,20 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 	
+	@RequestMapping(value = { "/api/account" }, method = { RequestMethod.POST })
+	public Account createAccount(@RequestBody Account account, 
+								 HttpServletResponse httpResponse, 
+								 WebRequest request) {
+
+		Long accountId = accountService.createAccount(account);
+		account.setAccountId(accountId);
+		
+		httpResponse.setStatus(HttpStatus.CREATED.value());
+		httpResponse.setHeader("Location", String.format("%s/api/account/%s", 
+										request.getContextPath(), accountId));		
+		return account;
+	}
+	
 	@RequestMapping(value = "/api/account/{accountId}", method = RequestMethod.GET)
 	public Account getAccount(@PathVariable("accountId") Long accountId) {
 		
@@ -42,17 +56,4 @@ public class AccountController {
 		return account;
 	}
 	
-	@RequestMapping(value = { "/api/account" }, method = { RequestMethod.POST })
-	public Account createAccount(@RequestBody Account account, 
-								 HttpServletResponse httpResponse, 
-								 WebRequest request) {
-
-		Long accountId = accountService.createAccount(account);
-		account.setAccountId(accountId);
-		
-		httpResponse.setStatus(HttpStatus.CREATED.value());
-		httpResponse.setHeader("Location", String.format("%s/api/account/%s", 
-										request.getContextPath(), accountId));		
-		return account;
-	}
 }
