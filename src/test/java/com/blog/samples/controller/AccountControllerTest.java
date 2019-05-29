@@ -1,5 +1,5 @@
 package com.blog.samples.controller;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,9 +27,10 @@ import com.blog.samples.model.EnumAccountType;
 import com.blog.samples.service.AccountService;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={ Application.class })
+
+@SpringBootTest(webEnvironment=WebEnvironment.MOCK, classes={ Application.class })
 public class AccountControllerTest {
-	
+
 	private MockMvc mockMvc;
 	
 	@Autowired
